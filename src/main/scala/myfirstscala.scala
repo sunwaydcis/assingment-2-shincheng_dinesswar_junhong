@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter 
 import scala.util.{Try, Using} 
  
-// CSV File Loader 
+// CSV Loader 
 object HotelCSVLoader: 
   private val UTF8 = "UTF-8" 
  
@@ -44,7 +44,7 @@ object DataUtils:
   def toInt(s: String): Int = 
     Try(s.trim.toInt).getOrElse(0) 
  
-  
+  def nightsBetween(checkIn: String, checkOut: String): Int = 
     Try { 
       val start = LocalDate.parse(checkIn, DateFormatter) 
       val end   = LocalDate.parse(checkOut, DateFormatter) 
@@ -63,16 +63,15 @@ object DataUtils:
     if values.isEmpty then 0.0 
     else values.sum / values.length 
 end DataUtils 
-
+ 
 // Analysis Trait 
 trait Analyzer: 
   def analyze(data: List[Map[String, String]]): Unit 
   protected def printHeader(title: String): Unit = 
     println(s"\n$title") 
-    println("─" * title.length
-
+    println("─" * title.length) 
  
-// 1. Country has the highest num of booking  
+// 1. Country with Most Bookings 
 class CountryWithMostBookings extends Analyzer: 
   override def analyze(data: List[Map[String, String]]): Unit = 
     printHeader("🌍 QUESTION 1 — Country With Highest Number of Bookings") 
