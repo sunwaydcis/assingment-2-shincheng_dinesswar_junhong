@@ -90,3 +90,25 @@ class CountryWithMostBookings extends Analyzer:
     println("─" * 56)
 
 // 2. Most Economical Hotel
+class MostEconomicalHotel extends Analyzer:
+  import DataUtils._
+
+  private def computeHotelMetrics(data: List[Map[String, String]]): List[HotelMetrics] =
+    data
+      .groupBy: row =>
+        HotelIdentifier(
+          safeGet(row, "Destination Country"),
+          safeGet(row, "Destination City"),
+          safeGet(row, "Hotel Name")
+        )
+      .toList
+      .flatMap: (id, rows) =>
+        val costPerNightList = rows.map: row =>
+          val price  = toDouble(safeGet(row, "Booking Price[SGD]"))
+          val rooms  = math.max(1, toInt(safeGet(row, "Rooms")))
+          val nights = nightsBetween(
+            safeGet(row, "Check-in date"),
+            safeGet(row, "Check-Out Date")
+          )
+          price / rooms / nights
+
