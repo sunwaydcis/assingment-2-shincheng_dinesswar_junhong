@@ -173,3 +173,21 @@ class MostProfitableHotel extends Analyzer:
  
   override def analyze(data: List[Map[String, String]]): Unit = 
     printHeader("💰 QUESTION 3 — Most Profitable Hotel (Visitors + Profit Margin)")
+// Convert rows → Booking-like structure 
+    val bookings = data.flatMap: row => 
+      Try { 
+        val hotel   = safeGet(row, "Hotel Name") 
+        val country = safeGet(row, "Destination Country") 
+        val city    = safeGet(row, "Destination City") 
+        val visitors = toInt(safeGet(row, "No. Of People")) 
+        val margin   = toDouble(safeGet(row, "Profit Margin")) 
+        (hotel, country, city, visitors.toDouble, margin) 
+      }.toOption 
+ 
+    if bookings.isEmpty then 
+      println(" ❌ No valid booking records for profitability evaluation.") 
+      return 
+ 
+    // Group profitability by unique hotel 
+    val results = 
+
