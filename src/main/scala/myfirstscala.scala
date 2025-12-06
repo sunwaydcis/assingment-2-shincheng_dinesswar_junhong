@@ -168,9 +168,3 @@ override def analyze(data: List[Map[String, String]]): Unit =
         println("─" * 56)
 
 // 3. Most Profitable Hotel
-import scala.io.Source
-case class Booking(hotelName: String, destinationCountry: String, destinationCity: String, price: Double, margin: Double, visitors: Int, discount: Double, rooms: Int, duration: Int)
-object HotelProfitability {
-  def minMax(list: Seq[Double]): (Double, Double) = {(list.min, list.max)}
-  def main(args: Array[String]): Unit = {
-
