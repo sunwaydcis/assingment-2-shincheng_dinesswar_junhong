@@ -214,5 +214,14 @@ class MostProfitableHotel extends Analyzer:
         } 
         .toList 
         .sortBy(-_._8) 
+ // Print results 
+    results.take(10).foreach { case (hotel, country, city, totVisitors, avgMargin, vScore, mScore, score) => 
+      println(f"$hotel%-25s | $country%-15s | $city%-15s | Visitors: $totVisitors%5.0f | Avg Profit: ${avgMargin}%.4f | Score: ${score}%.4f") 
+    } 
  
+    // Print the top hotel 
+    println() 
+    println(s"🔥 MOST PROFITABLE HOTEL OVERALL: ${results.head._1}") 
+    println("─" * 56) 
+
 
