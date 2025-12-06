@@ -183,19 +183,3 @@ object HotelProfitability {
     val bookings = lines.flatMap { line =>
       val cols = line.split(",", -1)
 
-      try {
-        val hotel = cols(16)
-        val destinationCountry   = cols(9)
-        val destinationCity     = cols(10)
-        val price = cols(20).replace("[SGD]","").replace(",","").toDouble  // Booking Price[SGD]
-        // Profit Margin
-        val margin = cols(23).replace("%","").toDouble / (if(cols(23) contains "%") 100 else 1)
-        val visitors =cols(11).toInt
-        val discount = cols(21).replace("%","").toDouble /
-          (if(cols(22).contains("%")) 100 else 1)
-        val rooms = cols(15).toInt
-        val duration = cols(13).toInt
-        Some(Booking(hotel, destinationCountry, destinationCity, price, margin, visitors, discount, rooms, duration))
-      } catch {case _: Throwable => None}
-    }.toList
-
