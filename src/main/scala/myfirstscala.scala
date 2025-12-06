@@ -189,5 +189,14 @@ class MostProfitableHotel extends Analyzer:
       return 
  
     // Group profitability by unique hotel 
-    val results = 
+    val results = bookings.groupBy(b => (b._1, b._2, b._3)).map { case ((hotel, country, city), group) => 
+ 
+          val visitorList = group.map(_._4) 
+          val marginList  = group.map(_._5) 
+ 
+          val (minVisitors, maxVisitors) = DataUtils.minMax(visitorList) 
+          val (minMargin, maxMargin)     = DataUtils.minMax(marginList) 
+ 
+          val totalVisitors = visitorList.sum 
+          val avgMargin     = marginList.sum / marginList.length
 
