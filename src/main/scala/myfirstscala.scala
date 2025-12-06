@@ -223,5 +223,33 @@ class MostProfitableHotel extends Analyzer:
     println() 
     println(s"🔥 MOST PROFITABLE HOTEL OVERALL: ${results.head._1}") 
     println("─" * 56) 
-
+// Main Application 
+object HotelAnalysisApp: 
+  def main(args: Array[String]): Unit = 
+    println("=" * 60) 
+    println("          HOTEL BOOKING ANALYSIS SYSTEM") 
+    println("=" * 60) 
+ 
+    // Load data 
+    val data = HotelCSVLoader.loadFromResources("Hotel_Dataset.csv") 
+    if data.isEmpty then 
+      println("❌ No data loaded. Exiting.") 
+      return 
+ 
+    println(s"✅ Loaded ${data.size} booking records") 
+    println() 
+ 
+    // Run analyses 
+    val analyzers: List[Analyzer] = List( 
+      new CountryWithMostBookings, 
+      new MostEconomicalHotel, 
+      new MostProfitableHotel 
+    ) 
+ 
+    analyzers.foreach(_.analyze(data)) 
+ 
+    println("\n" + "=" * 60) 
+    println("          ANALYSIS COMPLETE") 
+    println("=" * 60) 
+end HotelAnalysisApp 
 
