@@ -71,7 +71,7 @@ trait Analyzer:
     println(s"\n$title") 
     println("─" * title.length) 
  
-// 1. Country with Most Bookings 
+// 1. Country has the highest num of booking  
 class CountryWithMostBookings extends Analyzer: 
   override def analyze(data: List[Map[String, String]]): Unit = 
     printHeader("🌍 QUESTION 1 — Country With Highest Number of Bookings") 
