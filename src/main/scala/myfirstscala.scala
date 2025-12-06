@@ -199,18 +199,3 @@ object HotelProfitability {
       } catch {case _: Throwable => None}
     }.toList
 
-    // Group and calculate profitability
-    val results = bookings.groupBy(b => (b.hotelName, b.destinationCountry, b.destinationCity)).map {
-      case ((hotel, destinationCountry, destinationCity), group) =>
-        val visitorsList = group.map(_.visitors.toDouble)
-        val marginsList  = group.map(_.margin)
-        val (minVisitors, maxVisitors) = minMax(visitorsList)
-        val (minMargin, maxMargin) = minMax(marginsList)
-        val totalVisitors = group.map(_.visitors).sum
-        val totalProfitMargin = group.map(_.margin).sum
-        val avgProfitMargin = totalProfitMargin / group.length
-        val visitorP = if (maxVisitors - minVisitors == 0) 1.0 else (totalVisitors - minVisitors) / (maxVisitors - minVisitors)
-        val marginP  = if (maxMargin - minMargin == 0) 1.0 else (avgProfitMargin - minMargin) / (maxMargin - minMargin)
-        val score = (visitorP + marginP) / 2
-
-
