@@ -138,3 +138,6 @@ metrics.map: metric =>
       val finalScore = (priceScore + discountScore + profitScore) / 3.0
 
       (metric, NormalizedScores(priceScore, discountScore, profitScore), finalScore)
+
+override def analyze(data: List[Map[String, String]]): Unit =
+    printHeader("🏨 QUESTION 2 — Most Economical Hotel (Price, Discount, Profit Margin)")
