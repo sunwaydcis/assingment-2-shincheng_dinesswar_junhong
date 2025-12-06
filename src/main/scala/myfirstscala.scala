@@ -122,3 +122,11 @@ if costPerNightList.isEmpty then None
             totalVisitors = rows.map(r => toInt(safeGet(r, "No. Of People"))).sum
           ))
 
+private def calculateScores(metrics: List[HotelMetrics]): List[(HotelMetrics, NormalizedScores, Double)] =
+    val costs = metrics.map(_.avgCostPerNight)
+    val discounts = metrics.map(_.avgDiscount)
+    val profits = metrics.map(_.avgProfitMargin)
+
+    val (minCost, maxCost) = minMax(costs)
+    val (minDisc, maxDisc) = minMax(discounts)
+    val (minProf, maxProf) = minMax(profits)
