@@ -150,3 +150,16 @@ override def analyze(data: List[Map[String, String]]): Unit =
       case metrics =>
         val scoredHotels = calculateScores(metrics)
         val bestHotel = scoredHotels.maxByOption(_._3)
+
+        bestHotel match
+          case Some((metric, scores, finalScore)) =>
+            val id = metric.identifier
+            println(s" ✅ Hotel: ${id.name} (${id.city}, ${id.country})")
+            println(f"    Price Score      : ${scores.price}%.4f")
+            println(f"    Discount Score   : ${scores.discount}%.4f")
+            println(f"    Profit Score     : ${scores.profit}%.4f")
+            println(f"    FINAL ECON SCORE : $finalScore%.4f")
+          case None =>
+            println(" ❌ No hotel could be scored.")
+        println("─" * 56)
+
