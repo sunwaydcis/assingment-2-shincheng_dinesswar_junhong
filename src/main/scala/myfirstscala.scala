@@ -44,7 +44,7 @@ object DataUtils:
   def toInt(s: String): Int = 
     Try(s.trim.toInt).getOrElse(0) 
  
-  def nightsBetween(checkIn: String, checkOut: String): Int = 
+  
     Try { 
       val start = LocalDate.parse(checkIn, DateFormatter) 
       val end   = LocalDate.parse(checkOut, DateFormatter) 
