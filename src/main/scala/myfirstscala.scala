@@ -164,3 +164,60 @@ override def analyze(data: List[Map[String, String]]): Unit =
         println("─" * 56)
 
 // 3. Most Profitable Hotel
+import scala.io.Source
+case class Booking(hotelName: String, destinationCountry: String, destinationCity: String, price: Double, margin: Double, visitors: Int, discount: Double, rooms: Int, duration: Int)
+object HotelProfitability {
+  def minMax(list: Seq[Double]): (Double, Double) = {(list.min, list.max)}
+  def main(args: Array[String]): Unit = {
+
+    val filename = "/C:/Users/User/Downloads/Hotel_Dataset.csv"
+
+    val source = Source.fromFile("/C:/Users/User/Downloads/Hotel_Dataset.csv","ISO-8859-1")
+    val lines = source.getLines().toList
+    source.close()
+
+    val bookings = lines.flatMap { line =>
+      val cols = line.split(",", -1)
+
+      try {
+        val hotel = cols(16)
+        val destinationCountry   = cols(9)
+        val destinationCity     = cols(10)
+        val price = cols(20).replace("[SGD]","").replace(",","").toDouble  // Booking Price[SGD]
+        // Profit Margin
+        val margin = cols(23).replace("%","").toDouble / (if(cols(23) contains "%") 100 else 1)
+        val visitors =cols(11).toInt
+        val discount = cols(21).replace("%","").toDouble /
+          (if(cols(22).contains("%")) 100 else 1)
+        val rooms = cols(15).toInt
+        val duration = cols(13).toInt
+        Some(Booking(hotel, destinationCountry, destinationCity, price, margin, visitors, discount, rooms, duration))
+      } catch {case _: Throwable => None}
+    }.toList
+
+    // Group and calculate profitability
+    val results = bookings.groupBy(b => (b.hotelName, b.destinationCountry, b.destinationCity)).map {
+      case ((hotel, destinationCountry, destinationCity), group) =>
+        val visitorsList = group.map(_.visitors.toDouble)
+        val marginsList  = group.map(_.margin)
+        val (minVisitors, maxVisitors) = minMax(visitorsList)
+        val (minMargin, maxMargin) = minMax(marginsList)
+        val totalVisitors = group.map(_.visitors).sum
+        val totalProfitMargin = group.map(_.margin).sum
+        val avgProfitMargin = totalProfitMargin / group.length
+        val visitorP = if (maxVisitors - minVisitors == 0) 1.0 else (totalVisitors - minVisitors) / (maxVisitors - minVisitors)
+        val marginP  = if (maxMargin - minMargin == 0) 1.0 else (avgProfitMargin - minMargin) / (maxMargin - minMargin)
+        val score = (visitorP + marginP) / 2
+
+      (hotel, destinationCountry, destinationCity, totalVisitors, totalProfitMargin, avgProfitMargin, visitorP, marginP, score)
+    }.toList.sortBy(-_._7).take(10)// sort by totalProfit descending & show only top 10
+
+    // Print results
+    println(f"\n===== Top 10 Most Profitable Hotels =====\n")
+    results.foreach { case (hotel, destinationCountry, destinationCity, totalVisitors, totalProfitmargin, avgProfitmargin, visitorP, marginP, score) =>
+      println(f"$hotel%-20s | $destinationCountry%-15s | $destinationCity%-15s | Visitors: $totalVisitors%4d | Total Profit Margin: ${totalProfitmargin}%.2f | Average profit Margin: ${avgProfitmargin}%.2f | Visitor Percentage: ${visitorP}%.2f | Profit Margin Percentage: ${marginP}%.2f | Score: ${score}%.2f")
+    }
+
+    println("\n💰 Most profitable hotel = " + results.head._1)
+  }
+}
