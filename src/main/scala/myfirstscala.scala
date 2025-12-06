@@ -213,15 +213,4 @@ object HotelProfitability {
         val marginP  = if (maxMargin - minMargin == 0) 1.0 else (avgProfitMargin - minMargin) / (maxMargin - minMargin)
         val score = (visitorP + marginP) / 2
 
-      (hotel, destinationCountry, destinationCity, totalVisitors, totalProfitMargin, avgProfitMargin, visitorP, marginP, score)
-    }.toList.sortBy(-_._7).take(10)// sort by totalProfit descending & show only top 10
 
-    // Print results
-    println(f"\n===== Top 10 Most Profitable Hotels =====\n")
-    results.foreach { case (hotel, destinationCountry, destinationCity, totalVisitors, totalProfitmargin, avgProfitmargin, visitorP, marginP, score) =>
-      println(f"$hotel%-20s | $destinationCountry%-15s | $destinationCity%-15s | Visitors: $totalVisitors%4d | Total Profit Margin: ${totalProfitmargin}%.2f | Average profit Margin: ${avgProfitmargin}%.2f | Visitor Percentage: ${visitorP}%.2f | Profit Margin Percentage: ${marginP}%.2f | Score: ${score}%.2f")
-    }
-
-    println("\n💰 Most profitable hotel = " + results.head._1)
-  }
-}
