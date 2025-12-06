@@ -163,4 +163,4 @@ override def analyze(data: List[Map[String, String]]): Unit =
             println(" ❌ No hotel could be scored.")
         println("─" * 56)
 
-// 3. Most Profitable Hotel 
+// 3. Most Profitable Hotel
