@@ -63,8 +63,14 @@ object DataUtils:
     if values.isEmpty then 0.0 
     else values.sum / values.length 
 end DataUtils 
- 
---
+
+// Analysis Trait 
+trait Analyzer: 
+  def analyze(data: List[Map[String, String]]): Unit 
+  protected def printHeader(title: String): Unit = 
+    println(s"\n$title") 
+    println("─" * title.length
+
  
 // 1. Country has the highest num of booking  
 class CountryWithMostBookings extends Analyzer: 
