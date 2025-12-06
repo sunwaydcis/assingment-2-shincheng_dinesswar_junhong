@@ -112,3 +112,13 @@ class MostEconomicalHotel extends Analyzer:
           )
           price / rooms / nights
 
+if costPerNightList.isEmpty then None
+        else
+          Some(HotelMetrics(
+            identifier = id,
+            avgCostPerNight = mean(costPerNightList),
+            avgDiscount = mean(rows.map(r => toDouble(safeGet(r, "Discount")))),
+            avgProfitMargin = mean(rows.map(r => toDouble(safeGet(r, "Profit Margin")))),
+            totalVisitors = rows.map(r => toInt(safeGet(r, "No. Of People"))).sum
+          ))
+
