@@ -88,3 +88,5 @@ class CountryWithMostBookings extends Analyzer:
       case None => 
         println(" ❌ No data available.") 
     println("─" * 56)
+
+// 2. Most Economical Hotel
