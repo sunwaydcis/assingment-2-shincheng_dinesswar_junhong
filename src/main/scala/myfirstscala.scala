@@ -174,12 +174,3 @@ object HotelProfitability {
   def minMax(list: Seq[Double]): (Double, Double) = {(list.min, list.max)}
   def main(args: Array[String]): Unit = {
 
-    val filename = "/C:/Users/User/Downloads/Hotel_Dataset.csv"
-
-    val source = Source.fromFile("/C:/Users/User/Downloads/Hotel_Dataset.csv","ISO-8859-1")
-    val lines = source.getLines().toList
-    source.close()
-
-    val bookings = lines.flatMap { line =>
-      val cols = line.split(",", -1)
-
