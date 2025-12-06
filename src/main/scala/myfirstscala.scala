@@ -67,7 +67,7 @@ object DataUtils:
     if values.isEmpty then 0.0 
     else values.sum / values.length 
 end DataUtils 
- 
+
 // Analysis Trait 
 trait Analyzer: 
   def analyze(data: List[Map[String, String]]): Unit 
