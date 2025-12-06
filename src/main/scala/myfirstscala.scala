@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter 
 import scala.util.{Try, Using} 
  
-// CSV Loader 
+// CSV File Loader 
 object HotelCSVLoader: 
   private val UTF8 = "UTF-8" 
  
