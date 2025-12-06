@@ -39,7 +39,11 @@ object DataUtils:
     map.getOrElse(key, default).trim 
  
   def toDouble(s: String): Double = 
-    Try(s.replaceAll("[\\[\\]%]", "").trim.toDouble).getOrElse(0.0) 
+    val clean = s.replaceAll("[\\[\\]%]", "").trim 
+    Try(clean.toDouble).getOrElse(0.0) match { 
+      case x if x > 1 && s.contains("%") => x / 100.0 
+      case x => x 
+    } 
  
   def toInt(s: String): Int = 
     Try(s.trim.toInt).getOrElse(0) 
