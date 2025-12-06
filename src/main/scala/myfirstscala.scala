@@ -4,7 +4,21 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter 
 import scala.util.{Try, Using} 
  
-
+// CSV File Loader 
+object HotelCSVLoader: 
+  private val UTF8 = "UTF-8" 
+ 
+  def loadFromResources(filename: String): List[Map[String, String]] = 
+    Option(getClass.getResourceAsStream(s"/$filename")) match 
+      case None => 
+        println(s"❌ Failed to load dataset: $filename (File not found in resources)") 
+        Nil 
+      case Some(stream) => 
+        Using.resource(CSVReader.open(new InputStreamReader(stream, UTF8))) { reader => 
+          reader.allWithHeaders().toList 
+        } 
+  end loadFromResources 
+end HotelCSVLoader 
  
 // Data types 
 case class HotelIdentifier(country: String, city: String, name: String) 
