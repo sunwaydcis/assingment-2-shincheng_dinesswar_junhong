@@ -141,3 +141,12 @@ metrics.map: metric =>
 
 override def analyze(data: List[Map[String, String]]): Unit =
     printHeader("🏨 QUESTION 2 — Most Economical Hotel (Price, Discount, Profit Margin)")
+
+    computeHotelMetrics(data) match
+      case Nil =>
+        println(" ❌ No hotel entries found.")
+        println("─" * 56)
+
+      case metrics =>
+        val scoredHotels = calculateScores(metrics)
+        val bestHotel = scoredHotels.maxByOption(_._3)
