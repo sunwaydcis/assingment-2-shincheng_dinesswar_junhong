@@ -130,3 +130,11 @@ private def calculateScores(metrics: List[HotelMetrics]): List[(HotelMetrics, No
     val (minCost, maxCost) = minMax(costs)
     val (minDisc, maxDisc) = minMax(discounts)
     val (minProf, maxProf) = minMax(profits)
+
+metrics.map: metric =>
+      val priceScore = 1 - normalize(metric.avgCostPerNight, minCost, maxCost)
+      val discountScore = normalize(metric.avgDiscount, minDisc, maxDisc)
+      val profitScore = 1 - normalize(metric.avgProfitMargin, minProf, maxProf)
+      val finalScore = (priceScore + discountScore + profitScore) / 3.0
+
+      (metric, NormalizedScores(priceScore, discountScore, profitScore), finalScore)
