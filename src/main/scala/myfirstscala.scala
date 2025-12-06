@@ -199,4 +199,20 @@ class MostProfitableHotel extends Analyzer:
  
           val totalVisitors = visitorList.sum 
           val avgMargin     = marginList.sum / marginList.length
+// Normalization 
+          val visitorScore = 
+            if (maxVisitors - minVisitors == 0) 1.0 
+            else (totalVisitors - minVisitors) / (maxVisitors - minVisitors) 
+ 
+          val marginScore = 
+            if (maxMargin - minMargin == 0) 1.0 
+            else (avgMargin - minMargin) / (maxMargin - minMargin) 
+ 
+          val finalScore = (visitorScore + marginScore) / 2 
+ 
+          (hotel, country, city, totalVisitors, avgMargin, visitorScore, marginScore, finalScore) 
+        } 
+        .toList 
+        .sortBy(-_._8) 
+ 
 
