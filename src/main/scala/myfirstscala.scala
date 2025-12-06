@@ -168,3 +168,8 @@ override def analyze(data: List[Map[String, String]]): Unit =
         println("─" * 56)
 
 // 3. Most Profitable Hotel
+class MostProfitableHotel extends Analyzer: 
+  import DataUtils._ 
+ 
+  override def analyze(data: List[Map[String, String]]): Unit = 
+    printHeader("💰 QUESTION 3 — Most Profitable Hotel (Visitors + Profit Margin)")
