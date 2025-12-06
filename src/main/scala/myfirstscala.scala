@@ -87,4 +87,4 @@ class CountryWithMostBookings extends Analyzer:
         println(s"    Total Bookings: $count") 
       case None => 
         println(" ❌ No data available.") 
-    println("─" * 56
+    println("─" * 56)
